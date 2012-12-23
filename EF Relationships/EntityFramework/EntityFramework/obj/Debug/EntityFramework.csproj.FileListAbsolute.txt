@@ -1,0 +1,5 @@
+D:\Daily Preparations\Projects\EntityFramework\EntityFramework\bin\EntityFramework.dll
+D:\Daily Preparations\Projects\EntityFramework\EntityFramework\bin\EntityFramework.pdb
+D:\Daily Preparations\Projects\EntityFramework\EntityFramework\obj\Debug\ResolveAssemblyReference.cache
+D:\Daily Preparations\Projects\EntityFramework\EntityFramework\obj\Debug\EntityFramework.dll
+D:\Daily Preparations\Projects\EntityFramework\EntityFramework\obj\Debug\EntityFramework.pdb
