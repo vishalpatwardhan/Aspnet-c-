@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practice - MVC", "Practice - MVC\Practice - MVC.csproj", "{28476261-FD03-4430-AFBA-30811AA9B6FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{28476261-FD03-4430-AFBA-30811AA9B6FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28476261-FD03-4430-AFBA-30811AA9B6FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28476261-FD03-4430-AFBA-30811AA9B6FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28476261-FD03-4430-AFBA-30811AA9B6FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
