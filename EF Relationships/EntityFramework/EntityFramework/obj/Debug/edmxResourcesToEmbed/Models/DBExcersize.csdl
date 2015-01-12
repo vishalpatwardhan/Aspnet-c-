@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBExcersizeModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="DBExcersizeEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Courses" EntityType="DBExcersizeModel.Cours" />
+    <EntitySet Name="Standards" EntityType="DBExcersizeModel.Standard" />
+    <EntitySet Name="Students" EntityType="DBExcersizeModel.Student" />
+    <EntitySet Name="Teachers" EntityType="DBExcersizeModel.Teacher" />
+    <AssociationSet Name="fk_courseteacher_tid" Association="DBExcersizeModel.fk_courseteacher_tid">
+      <End Role="Teacher" EntitySet="Teachers" />
+      <End Role="Courses" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="fk_studentstandard_sid" Association="DBExcersizeModel.fk_studentstandard_sid">
+      <End Role="Standard" EntitySet="Standards" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="fk_teacherstandard_sid" Association="DBExcersizeModel.fk_teacherstandard_sid">
+      <End Role="Standard" EntitySet="Standards" />
+      <End Role="Teacher" EntitySet="Teachers" />
+    </AssociationSet>
+    <AssociationSet Name="StudentCourse" Association="DBExcersizeModel.StudentCourse">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Cours">
+    <Key>
+      <PropertyRef Name="CourseId" />
+    </Key>
+    <Property Name="CourseId" Type="Int32" Nullable="false" />
+    <Property Name="CourseName" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+    <Property Name="Location" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+    <Property Name="TeacherId" Type="Int32" />
+    <NavigationProperty Name="Teacher" Relationship="DBExcersizeModel.fk_courseteacher_tid" FromRole="Courses" ToRole="Teacher" />
+    <NavigationProperty Name="Students" Relationship="DBExcersizeModel.StudentCourse" FromRole="Courses" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Standard">
+    <Key>
+      <PropertyRef Name="StandardId" />
+    </Key>
+    <Property Name="StandardId" Type="Int32" Nullable="false" />
+    <Property Name="StandardName" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Students" Relationship="DBExcersizeModel.fk_studentstandard_sid" FromRole="Standard" ToRole="Student" />
+    <NavigationProperty Name="Teachers" Relationship="DBExcersizeModel.fk_teacherstandard_sid" FromRole="Standard" ToRole="Teacher" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="Int32" Nullable="false" />
+    <Property Name="StudentName" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+    <Property Name="StandardId" Type="Int32" />
+    <NavigationProperty Name="Standard" Relationship="DBExcersizeModel.fk_studentstandard_sid" FromRole="Student" ToRole="Standard" />
+    <NavigationProperty Name="Courses" Relationship="DBExcersizeModel.StudentCourse" FromRole="Student" ToRole="Courses" />
+  </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="TeacherId" />
+    </Key>
+    <Property Name="TeacherId" Type="Int32" Nullable="false" />
+    <Property Name="TeacherName" Type="String" MaxLength="25" Unicode="false" FixedLength="false" />
+    <Property Name="StandardId" Type="Int32" />
+    <NavigationProperty Name="Courses" Relationship="DBExcersizeModel.fk_courseteacher_tid" FromRole="Teacher" ToRole="Courses" />
+    <NavigationProperty Name="Standard" Relationship="DBExcersizeModel.fk_teacherstandard_sid" FromRole="Teacher" ToRole="Standard" />
+  </EntityType>
+  <Association Name="fk_courseteacher_tid">
+    <End Role="Teacher" Type="DBExcersizeModel.Teacher" Multiplicity="0..1" />
+    <End Role="Courses" Type="DBExcersizeModel.Cours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="Courses">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_studentstandard_sid">
+    <End Role="Standard" Type="DBExcersizeModel.Standard" Multiplicity="0..1" />
+    <End Role="Student" Type="DBExcersizeModel.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Standard">
+        <PropertyRef Name="StandardId" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="StandardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_teacherstandard_sid">
+    <End Role="Standard" Type="DBExcersizeModel.Standard" Multiplicity="0..1" />
+    <End Role="Teacher" Type="DBExcersizeModel.Teacher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Standard">
+        <PropertyRef Name="StandardId" />
+      </Principal>
+      <Dependent Role="Teacher">
+        <PropertyRef Name="StandardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StudentCourse">
+    <End Role="Courses" Type="DBExcersizeModel.Cours" Multiplicity="*" />
+    <End Role="Student" Type="DBExcersizeModel.Student" Multiplicity="*" />
+  </Association>
+</Schema>

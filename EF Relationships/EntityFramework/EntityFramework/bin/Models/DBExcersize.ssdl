@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBExcersizeModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="DBExcersizeModelStoreContainer">
+    <EntitySet Name="Courses" EntityType="DBExcersizeModel.Store.Courses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Standard" EntityType="DBExcersizeModel.Store.Standard" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Student" EntityType="DBExcersizeModel.Store.Student" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StudentCourse" EntityType="DBExcersizeModel.Store.StudentCourse" store:Type="Tables" store:Schema="dbo" store:Name="StudentCourse">
+      <DefiningQuery>SELECT 
+      [StudentCourse].[StudentId] AS [StudentId], 
+      [StudentCourse].[CourseId] AS [CourseId]
+      FROM [dbo].[StudentCourse] AS [StudentCourse]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Teacher" EntityType="DBExcersizeModel.Store.Teacher" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="fk_courseteacher_tid" Association="DBExcersizeModel.Store.fk_courseteacher_tid">
+      <End Role="Teacher" EntitySet="Teacher" />
+      <End Role="Courses" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="fk_studentcoursecourse_scid" Association="DBExcersizeModel.Store.fk_studentcoursecourse_scid">
+      <End Role="Courses" EntitySet="Courses" />
+      <End Role="StudentCourse" EntitySet="StudentCourse" />
+    </AssociationSet>
+    <AssociationSet Name="fk_studentcoursestudent_scid" Association="DBExcersizeModel.Store.fk_studentcoursestudent_scid">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="StudentCourse" EntitySet="StudentCourse" />
+    </AssociationSet>
+    <AssociationSet Name="fk_studentstandard_sid" Association="DBExcersizeModel.Store.fk_studentstandard_sid">
+      <End Role="Standard" EntitySet="Standard" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+    <AssociationSet Name="fk_teacherstandard_sid" Association="DBExcersizeModel.Store.fk_teacherstandard_sid">
+      <End Role="Standard" EntitySet="Standard" />
+      <End Role="Teacher" EntitySet="Teacher" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="CourseId" />
+    </Key>
+    <Property Name="CourseId" Type="int" Nullable="false" />
+    <Property Name="CourseName" Type="varchar" MaxLength="25" />
+    <Property Name="Location" Type="varchar" MaxLength="25" />
+    <Property Name="TeacherId" Type="int" />
+  </EntityType>
+  <EntityType Name="Standard">
+    <Key>
+      <PropertyRef Name="StandardId" />
+    </Key>
+    <Property Name="StandardId" Type="int" Nullable="false" />
+    <Property Name="StandardName" Type="varchar" MaxLength="25" />
+    <Property Name="Description" Type="varchar" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="StudentId" />
+    </Key>
+    <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="StudentName" Type="varchar" MaxLength="25" />
+    <Property Name="StandardId" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'DBExcersize.dbo.StudentCourse' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="StudentCourse">
+    <Key>
+      <PropertyRef Name="StudentId" />
+      <PropertyRef Name="CourseId" />
+    </Key>
+    <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="TeacherId" />
+    </Key>
+    <Property Name="TeacherId" Type="int" Nullable="false" />
+    <Property Name="TeacherName" Type="varchar" MaxLength="25" />
+    <Property Name="StandardId" Type="int" />
+  </EntityType>
+  <Association Name="fk_courseteacher_tid">
+    <End Role="Teacher" Type="DBExcersizeModel.Store.Teacher" Multiplicity="0..1" />
+    <End Role="Courses" Type="DBExcersizeModel.Store.Courses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="TeacherId" />
+      </Principal>
+      <Dependent Role="Courses">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_studentcoursecourse_scid">
+    <End Role="Courses" Type="DBExcersizeModel.Store.Courses" Multiplicity="1" />
+    <End Role="StudentCourse" Type="DBExcersizeModel.Store.StudentCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Courses">
+        <PropertyRef Name="CourseId" />
+      </Principal>
+      <Dependent Role="StudentCourse">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_studentcoursestudent_scid">
+    <End Role="Student" Type="DBExcersizeModel.Store.Student" Multiplicity="1" />
+    <End Role="StudentCourse" Type="DBExcersizeModel.Store.StudentCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="StudentId" />
+      </Principal>
+      <Dependent Role="StudentCourse">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_studentstandard_sid">
+    <End Role="Standard" Type="DBExcersizeModel.Store.Standard" Multiplicity="0..1" />
+    <End Role="Student" Type="DBExcersizeModel.Store.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Standard">
+        <PropertyRef Name="StandardId" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="StandardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_teacherstandard_sid">
+    <End Role="Standard" Type="DBExcersizeModel.Store.Standard" Multiplicity="0..1" />
+    <End Role="Teacher" Type="DBExcersizeModel.Store.Teacher" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Standard">
+        <PropertyRef Name="StandardId" />
+      </Principal>
+      <Dependent Role="Teacher">
+        <PropertyRef Name="StandardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+      warning 6013: The table/view 'DBExcersize.dbo.StudentAddress' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="StudentAddress">
+        <Property Name="StudentId" Type="int" />
+        <Property Name="Address1" Type="varchar" MaxLength="25" />
+        <Property Name="Address2" Type="varchar" MaxLength="25" />
+        <Property Name="City" Type="varchar" MaxLength="25" />
+        <Property Name="State" Type="varchar" MaxLength="25" />
+      </EntityType>-->
+</Schema>
